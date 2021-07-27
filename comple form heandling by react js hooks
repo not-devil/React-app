@@ -1,0 +1,83 @@
+import React, { useState } from 'react';
+import { SingleEntryPlugin } from 'webpack';
+import './App.css';
+
+function App() {
+
+  const [fullInformation, fullInfor] = useState({
+    fname: '',
+    lname: '',
+    email: ''
+  });
+
+  const inputEventhandling = (event) => {
+
+    const value = event.target.value;
+    const name = event.target.name;
+
+    // or we can use this is the place of this two line 14 and 15 by Single line 
+    // const {value , name} = event.target;
+
+    fullInfor((preValue) => {
+
+      if (name === "fname") {
+        return {
+          fname: value,
+          lname: preValue.lname,
+          email: preValue.email
+        };
+      }
+      else if (name === "lname") {
+        return {
+          fname: preValue.fname,
+          lname: value,
+          email: preValue.email
+        };
+      }
+      else if (name === "email") {
+        return {
+          fname: preValue.fname,
+          lname: preValue.lname,
+          email: value
+        };
+      }
+
+
+    });
+
+  };
+
+
+
+
+  return (
+    <>
+      <div className="div__form">
+        <h1>hello <span></span></h1>
+        <p>
+          hello ,
+          <br />
+          thanx for your FeedBack {fullInformation.fname} , {fullInformation.lname} ,{fullInformation.email}
+        </p>
+        <div className="form__div">
+          <form>
+            <div class="mb-3">
+              <label>First Name</label>
+              <input value={fullInformation.fname} name="fname" onChange={inputEventhandling} type="email" class="form-control" id="exampleFormControlInput1" placeholder="first Name" />
+            </div>
+            <div class="mb-3">
+              <label>Last Name</label>
+              <input value={fullInformation.lname} name="lname" onChange={inputEventhandling} type="text" class="form-control" id="exampleFormControlInput1" placeholder="last Name" />
+            </div>
+            <div class="mb-3">
+              <label>Email address</label>
+              <input value={fullInformation.email} name="email" onChange={inputEventhandling} type="text" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" />
+            </div>
+          </form>
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default App;
